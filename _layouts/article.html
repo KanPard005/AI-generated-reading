@@ -1,0 +1,92 @@
+---
+layout: default
+---
+{%- assign topic = site.data.topics[page.topic] -%}
+<div class="progress" aria-hidden="true"><span></span></div>
+
+<div class="article-shell">
+  <aside class="toc-rail" aria-label="Contents">
+    <nav class="toc" hidden>
+      <p class="toc__title">Contents</p>
+      <ol></ol>
+    </nav>
+  </aside>
+
+  <article class="article topic-{{ page.topic | default: 'default' }}" data-article-id="{{ page.slug }}" data-article-title="{{ page.title | escape }}">
+    <header class="article-header">
+      <a class="eyebrow" href="{{ '/' | relative_url }}?topic={{ page.topic | url_encode }}">
+        <span class="dot" aria-hidden="true"></span>{{ topic.label | default: page.topic | capitalize }}
+      </a>
+      <h1 class="article-title">{{ page.title }}</h1>
+      {%- if page.subtitle %}
+      <p class="dek">{{ page.subtitle }}</p>
+      {%- endif %}
+
+      <div class="meta">
+        <span class="meta__time" title="Intended reading time">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <strong>{{ page.reading_time }} min read</strong>
+        </span>
+        <span class="meta__sep" aria-hidden="true">·</span>
+        <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>
+        {%- if page.level %}
+        <span class="meta__sep" aria-hidden="true">·</span>
+        <span class="meta__level">{{ page.level | capitalize }}</span>
+        {%- endif %}
+        <span class="meta__read" hidden>
+          <span class="meta__sep" aria-hidden="true">·</span>
+          <span class="badge badge--read">Read</span>
+        </span>
+      </div>
+
+      {%- if page.tags and page.tags.size > 0 %}
+      <ul class="tags" aria-label="Tags">
+        {%- for t in page.tags %}
+        <li><a class="tag" href="{{ '/' | relative_url }}?tag={{ t | url_encode }}">{{ t }}</a></li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+
+      {%- if page.summary %}
+      <p class="summary">{{ page.summary }}</p>
+      {%- endif %}
+
+      {%- if page.brief %}
+      <details class="brief">
+        <summary>The brief</summary>
+        <div>{{ page.brief | markdownify }}</div>
+      </details>
+      {%- endif %}
+    </header>
+
+    <div class="article-body" id="article-body">
+{{ content }}
+    </div>
+
+    {%- if page.references and page.references.size > 0 %}
+    <section class="references" aria-labelledby="references-heading">
+      <h2 id="references-heading">References &amp; further reading</h2>
+      <ol>
+        {%- for r in page.references %}
+        <li>
+          {%- if r.title -%}
+            {%- if r.url %}<a href="{{ r.url }}" rel="noopener">{{ r.title }}</a>{% else %}{{ r.title }}{% endif -%}
+            {%- if r.note %} <span class="ref-note">— {{ r.note }}</span>{% endif -%}
+          {%- else -%}
+            {{ r | markdownify | remove: '<p>' | remove: '</p>' | strip }}
+          {%- endif -%}
+        </li>
+        {%- endfor %}
+      </ol>
+    </section>
+    {%- endif %}
+
+    <footer class="article-footer">
+      <button class="btn" id="mark-read" type="button" aria-pressed="false">Mark as read</button>
+      <a class="btn btn--ghost" href="{{ '/' | relative_url }}">Back to library</a>
+    </footer>
+  </article>
+</div>
+
+<script src="{{ '/assets/js/article.js' | relative_url }}" defer></script>
+<script src="{{ '/assets/js/annotate.js' | relative_url }}" defer></script>

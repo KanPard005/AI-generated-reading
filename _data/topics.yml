@@ -1,0 +1,11 @@
+# Topics shown in the library. Add a new key here (and a colour token in
+# assets/css/main.css: --topic-<key>) to introduce a new topic.
+science:
+  label: Science
+  blurb: Physics, biology, mathematics, computation.
+philosophy:
+  label: Philosophy
+  blurb: Epistemology, ethics, mind, logic, philosophy of science.
+finance:
+  label: Finance
+  blurb: Markets, asset pricing, risk, decision-making under uncertainty.

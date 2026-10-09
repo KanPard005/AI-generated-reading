@@ -1,0 +1,39 @@
+title: Reading Room
+tagline: AI-generated articles on science, philosophy, and finance.
+author: Kanad
+lang: en
+
+# On GitHub Pages, `url` and `baseurl` are filled in automatically from the
+# repository (e.g. https://<user>.github.io/<repo>). Leave them unset unless
+# you use a custom domain. Always link with the `relative_url` filter.
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  hard_wrap: false
+  math_engine: mathjax        # emits \( \) / \[ \]; KaTeX renders them client-side
+  syntax_highlighter: rouge
+  auto_ids: true
+  footnote_backlink: "↩"
+
+collections:
+  articles:
+    output: true
+    permalink: /articles/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: articles
+    values:
+      layout: article
+
+exclude:
+  - README.md
+  - AUTHORING.md
+  - scripts/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/

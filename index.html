@@ -1,0 +1,68 @@
+---
+layout: default
+nav: library
+body_class: page-library
+scripts:
+  - /assets/js/library.js
+---
+<div class="library">
+  <header class="library-hero">
+    <h1>{{ site.title }}</h1>
+    <p class="library-hero__tagline">{{ site.tagline }}</p>
+    <p class="library-hero__stats" id="lib-stats"></p>
+  </header>
+
+  <section class="filters" aria-label="Filter articles">
+    <div class="filters__row">
+      <label class="search">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Search titles, summaries, tags…  ( / )" autocomplete="off" aria-label="Search">
+      </label>
+      <div class="filters__selects">
+        <label class="select"><span>Length</span>
+          <select id="len">
+            <option value="">Any</option>
+            <option value="short">≤ 10 min</option>
+            <option value="medium">11–20 min</option>
+            <option value="long">&gt; 20 min</option>
+          </select>
+        </label>
+        <label class="select"><span>Status</span>
+          <select id="status">
+            <option value="">All</option>
+            <option value="unread">Unread</option>
+            <option value="read">Read</option>
+            <option value="annotated">Annotated</option>
+          </select>
+        </label>
+        <label class="select"><span>Sort</span>
+          <select id="sort">
+            <option value="new">Newest</option>
+            <option value="old">Oldest</option>
+            <option value="short">Shortest</option>
+            <option value="long">Longest</option>
+            <option value="title">Title</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="pills" id="topics" role="group" aria-label="Topic"></div>
+
+    <div class="tagbar">
+      <div class="tagbar__head">
+        <span class="label">Tags</span>
+        <button type="button" class="link-btn" id="clear-filters" hidden>Clear all filters</button>
+      </div>
+      <div class="tagcloud" id="tags" role="group" aria-label="Tags"></div>
+    </div>
+  </section>
+
+  <p class="results-count" id="count" aria-live="polite"></p>
+  <ul class="cards" id="results"></ul>
+  <div class="empty" id="empty" hidden>
+    <p>No articles match these filters.</p>
+  </div>
+</div>
+
+<script type="application/json" id="articles-data">{% include articles-json.liquid %}</script>

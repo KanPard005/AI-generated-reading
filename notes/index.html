@@ -1,0 +1,43 @@
+---
+layout: default
+title: Notes
+nav: notes
+body_class: page-notes
+katex: true
+scripts:
+  - /assets/js/notes.js
+---
+<div class="notes-page">
+  <header class="library-hero">
+    <h1>Notes &amp; highlights</h1>
+    <p class="library-hero__tagline">Everything you've marked, across all articles. Stored in this browser — export to back up or move to another device.</p>
+  </header>
+
+  <div class="filters filters--notes">
+    <div class="filters__row">
+      <label class="search">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="nq" type="search" placeholder="Search highlights and notes…" autocomplete="off" aria-label="Search notes">
+      </label>
+      <div class="filters__selects">
+        <label class="select"><span>Show</span>
+          <select id="nkind">
+            <option value="">Everything</option>
+            <option value="notes">Only with notes</option>
+            <option value="yellow">Yellow</option>
+            <option value="green">Green</option>
+            <option value="blue">Blue</option>
+            <option value="pink">Pink</option>
+          </select>
+        </label>
+        <button class="btn btn--ghost" type="button" id="n-export">Export</button>
+        <label class="btn btn--ghost" for="n-import">Import<input type="file" id="n-import" accept="application/json,.json" hidden></label>
+      </div>
+    </div>
+  </div>
+
+  <p class="results-count" id="ncount" aria-live="polite"></p>
+  <div id="notes-list"></div>
+</div>
+
+<script type="application/json" id="articles-data">{% include articles-json.liquid %}</script>
