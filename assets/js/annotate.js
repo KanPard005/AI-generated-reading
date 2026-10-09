@@ -18,7 +18,7 @@
 
   var articleId = article.dataset.articleId;
   var COLORS = ["yellow", "green", "blue", "pink"];
-  var EXCLUDE = ".chart-render, .mermaid, script, style, svg, button, textarea, .heading-anchor, .code-lang, .ann-ui";
+  var EXCLUDE = "[data-no-annotate], .chart-render, .mermaid, script, style, svg, button, textarea, .heading-anchor, .code-lang, .ann-ui";
   var CTX = 32;
   var coarse = window.matchMedia && matchMedia("(pointer: coarse)").matches;
 

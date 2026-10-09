@@ -263,17 +263,18 @@ h2:hover .heading-anchor, h3:hover .heading-anchor { opacity: 1; }
 .article-body blockquote { margin: 1.4em 0; padding: .1em 0 .1em 1.1em; border-left: 3px solid var(--border-strong); color: var(--text-2); }
 
 /* callouts: add with kramdown IAL, e.g. a blockquote followed by {: .theorem} */
-.note, .key, .warning, .theorem, .definition, .proof, .example, .aside {
+.note, .key, .warning, .theorem, .definition, .proof, .example, .aside, .formula {
   margin: 1.6em 0; padding: .95em 1.1em; border-radius: 8px; border: 1px solid var(--border);
   border-left: 3px solid var(--c, var(--accent)); background: color-mix(in srgb, var(--c, var(--accent)) 6%, var(--surface));
   color: var(--text);
 }
 .article-body blockquote.note, .article-body blockquote.key, .article-body blockquote.warning, .article-body blockquote.theorem,
-.article-body blockquote.definition, .article-body blockquote.proof, .article-body blockquote.example, .article-body blockquote.aside {
+.article-body blockquote.definition, .article-body blockquote.proof, .article-body blockquote.example, .article-body blockquote.aside, .article-body blockquote.formula {
   padding: .95em 1.1em; color: var(--text);
 }
 .note > :first-child, .key > :first-child, .warning > :first-child, .theorem > :first-child, .definition > :first-child, .proof > :first-child, .example > :first-child, .aside > :first-child { margin-top: 0; }
 .note { --c: var(--accent); }
+.formula { --c: var(--topic, var(--accent)); }
 .key { --c: var(--topic, var(--accent)); }
 .warning { --c: #da1e28; }
 .theorem { --c: var(--topic-philosophy); }
@@ -281,6 +282,10 @@ h2:hover .heading-anchor, h3:hover .heading-anchor { opacity: 1; }
 .example { --c: var(--topic-finance); }
 .proof { --c: var(--border-strong); background: transparent; border-style: dashed; border-left-style: solid; }
 .proof > :last-child::after { content: " ∎"; color: var(--muted); }
+.formula > p:first-child { font-family: var(--font-serif); font-style: italic; font-size: 1.08em; }
+.formula > p + p { font-size: .85em; color: var(--muted); }
+.article-body blockquote.epigraph { margin: 0 0 2.25em; padding: 0 0 0 1.1em; border-left: 3px solid var(--topic, var(--border-strong)); font-family: var(--font-serif); font-style: italic; font-size: 1.15em; line-height: 1.55; color: var(--text); }
+.article-body blockquote.epigraph p + p { margin-top: .6em; font-family: var(--font-sans); font-style: normal; font-size: .78em; color: var(--muted); }
 .aside { --c: var(--border-strong); background: var(--surface-2); font-size: .95em; color: var(--text-2); }
 
 /* code */
@@ -338,6 +343,23 @@ code, kbd, pre { font-family: var(--font-mono); }
 .chart-render .vega-bind { display: flex; align-items: center; gap: .5rem; }
 .chart-render .vega-bind-name { font-family: var(--font-mono); font-size: .8rem; }
 .chart-render input[type="range"] { accent-color: var(--topic, var(--accent)); width: 160px; }
+/* interactive widgets (canvas demos, sliders): <div class="chart widget" data-no-annotate> */
+.widget canvas { display: block; width: 100%; height: 270px; margin: .75rem 0 .5rem; }
+.widget-row { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; font-size: .9rem; color: var(--text-2); }
+.widget-row input[type="range"] { width: 200px; accent-color: var(--topic, var(--accent)); }
+.widget .btn { padding: .45rem .75rem; font-size: .84rem; }
+.widget output { display: block; min-height: 2.9em; font-size: .88rem; color: var(--text-2); font-variant-numeric: tabular-nums; }
+
+/* stacked box-and-arrow diagram: <div class="flow"> */
+.flow { display: flex; flex-direction: column; align-items: stretch; margin: 2em 0; font-size: .9rem; line-height: 1.5; }
+.flow-box { padding: .75rem 1rem; border: 1.5px solid var(--border-strong); border-radius: 8px; background: var(--surface); color: var(--text-2); }
+.flow-box b { display: block; margin-bottom: .1rem; font-weight: 600; color: var(--text); }
+.flow-box--ghost { border-style: dashed; background: transparent; color: var(--muted); }
+.flow-box--accent { border-color: var(--topic, var(--accent)); background: color-mix(in srgb, var(--topic, var(--accent)) 8%, var(--surface)); }
+.flow-arrow { align-self: center; padding: .2rem 0; font-size: .78rem; color: var(--muted); text-align: center; }
+.flow-arrow::before { content: ""; display: block; width: 1.5px; height: .9rem; margin: 0 auto .15rem; background: var(--muted); }
+.flow-arrow::after { content: ""; display: block; width: 0; height: 0; margin: .1rem auto 0; border: 5px solid transparent; border-top-color: var(--muted); border-bottom: 0; }
+
 .chart-error { color: #da1e28; font-size: .85rem; font-family: var(--font-mono); }
 .mermaid { display: flex; justify-content: center; background: none !important; border: 0 !important; }
 

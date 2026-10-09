@@ -10,10 +10,11 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 REQUIRED = ["title", "topic", "tags", "reading_time", "date"]
-WPM = 200            # dense technical prose
+WPM = 230            # prose words per minute (technical reading)
 PER_DISPLAY_EQ = 0.25  # minutes per display equation
 PER_CODE_LINE = 0.04
 PER_CHART = 0.75
+PER_INLINE_MATH = 0.05  # ~3 s per inline formula
 
 
 def front_matter(text):
@@ -38,21 +39,22 @@ def estimate(body):
     for block in re.findall(r"^```.*?\n(.*?)^```", body, re.S | re.M):
         code_lines += block.count("\n")
     body_nc = re.sub(r"^```.*?^```", " ", body, flags=re.S | re.M)
-    charts = len(re.findall(r"application/vnd\.vegalite\+json", body_nc))
+    charts = len(re.findall(r'class="(?:chart|flow)[\s"]', body_nc))
     body_nc = re.sub(r"<script.*?</script>", " ", body_nc, flags=re.S)
-    display = len(re.findall(r"^\s*\$\$\s*$", body_nc, re.M)) // 2
+    display = len(re.findall(r"^\s*(?:>\s*)?\$\$\s*$", body_nc, re.M)) // 2
+    inline = len(re.findall(r"\$\$.*?\$\$", body_nc, flags=re.S)) - display
     prose = re.sub(r"\$\$.*?\$\$", " x ", body_nc, flags=re.S)
     prose = re.sub(r"<[^>]+>", " ", prose)
     words = len(re.findall(r"[A-Za-z0-9’'-]+", prose))
-    minutes = words / WPM + display * PER_DISPLAY_EQ + code_lines * PER_CODE_LINE + charts * PER_CHART
-    return words, display, code_lines, charts, minutes
+    minutes = words / WPM + display * PER_DISPLAY_EQ + inline * PER_INLINE_MATH + code_lines * PER_CODE_LINE + charts * PER_CHART
+    return words, display + inline, code_lines, charts, minutes
 
 
 def main(paths):
     files = [pathlib.Path(p) for p in paths] or sorted((ROOT / "_articles").glob("*.md"))
     known = topics()
     problems = 0
-    print(f"{'article':34} {'target':>6} {'est':>6} {'words':>6} {'eq':>4} {'code':>5} {'chart':>5}")
+    print(f"{'article':34} {'target':>6} {'est':>6} {'words':>6} {'math':>5} {'code':>5} {'chart':>5}")
     for f in files:
         fm, body = front_matter(f.read_text(encoding="utf-8"))
         if fm is None:
@@ -72,7 +74,7 @@ def main(paths):
         flag = ""
         if target and abs(est - target) / target > 0.25:
             flag = "  <- off by >25%"
-        print(f"{f.stem[:34]:34} {target:6.0f} {est:6.1f} {words:6d} {eq:4d} {code:5d} {charts:5d}{flag}")
+        print(f"{f.stem[:34]:34} {target:6.0f} {est:6.1f} {words:6d} {eq:5d} {code:5d} {charts:5d}{flag}")
     return 1 if problems else 0
 
 

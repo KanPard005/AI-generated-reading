@@ -98,6 +98,43 @@ flowchart LR
 ```
 ````
 
+## 7b. Interactive widgets and box diagrams
+
+For a custom demo (canvas, sliders, buttons), wrap it in a widget container and put the script in its own raw block right after it. `data-no-annotate` keeps highlights out of text that changes at runtime.
+
+```html
+<div class="chart widget" data-no-annotate="">
+<div class="widget-row">
+<label for="x-p">Parameter \(p\): <strong id="x-pval">0.5</strong></label>
+<input type="range" id="x-p" min="0" max="1" step="0.01" value="0.5">
+<button id="x-run" type="button" class="btn btn--ghost">Run</button>
+</div>
+<canvas id="x-cv"></canvas>
+<output id="x-out" aria-live="polite"></output>
+<p class="chart-caption">What the reader should notice.</p>
+</div>
+
+<script>
+(function () {
+  /* Read colours from CSS variables (--topic on article.article, --muted, --border, --accent, --font-sans)
+     and redraw on document 'rr:themechange'. Prefix element ids with the article slug to avoid clashes. */
+})();
+</script>
+```
+
+For a stacked box-and-arrow diagram (simpler and more legible than Mermaid for linear pipelines):
+
+```html
+<div class="flow">
+<div class="flow-box flow-box--ghost"><b>Input</b>Dashed, for something outside the system.</div>
+<div class="flow-arrow">feeds</div>
+<div class="flow-box"><b>Stage</b>Description.</div>
+<div class="flow-arrow">produces</div>
+<div class="flow-box flow-box--accent"><b>Output</b>Highlighted in the topic colour.</div>
+<p class="chart-caption">Caption.</p>
+</div>
+```
+
 ## 8. Callouts
 
 Add a class to a blockquote with a kramdown attribute list on the next line:
@@ -107,7 +144,7 @@ Add a class to a blockquote with a kramdown attribute list on the next line:
 {: .theorem}
 ```
 
-Available: `.theorem`, `.definition`, `.proof` (adds ∎), `.example`, `.key` (main takeaway), `.note`, `.warning`, `.aside`.
+Available: `.theorem`, `.definition`, `.proof` (adds ∎), `.example`, `.key` (main takeaway), `.note`, `.warning`, `.aside`, `.formula` (a quoted principle; the second paragraph is the attribution), and `.epigraph` (an opening quotation placed before the first section, with the attribution as its second paragraph).
 
 ## 9. Other
 

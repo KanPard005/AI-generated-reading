@@ -176,7 +176,9 @@
       li.className = "toc-" + h.tagName.toLowerCase();
       var a = document.createElement("a");
       a.href = "#" + h.id;
-      a.textContent = h.textContent.replace(/^#/, "").trim();
+      var label = h.cloneNode(true);
+      label.querySelectorAll(".heading-anchor, .katex-mathml").forEach(function (n) { n.remove(); });
+      a.innerHTML = label.innerHTML.trim();
       li.appendChild(a);
       ol.appendChild(li);
       links[h.id] = a;
